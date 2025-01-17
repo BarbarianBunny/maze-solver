@@ -38,3 +38,15 @@ class Cell:
         if self.has_top_wall:
             line = Line(self._tl_point, self._tr_point)
             line.draw(self._win.canvas, "black")
+
+    def center(self):
+        x = (self._tl_point.x + self._br_point.x) // 2
+        y = (self._tl_point.y + self._br_point.y) // 2
+        return Point(x, y)
+    
+    def draw_move(self, to_cell, undo=False):
+        line = Line(self.center(), to_cell.center())
+        if undo:
+            line.draw(self._win.canvas, "gray")
+        else:
+            line.draw(self._win.canvas, "red")
