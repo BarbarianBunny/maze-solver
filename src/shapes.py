@@ -50,3 +50,34 @@ class Cell:
             line.draw(self._win.canvas, "gray")
         else:
             line.draw(self._win.canvas, "red")
+
+
+class Maze:
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+        self.x1 = x1 
+        self.y1 = y1 
+        self.num_rows = num_rows 
+        self.num_cols = num_cols 
+        self.cell_size_x = cell_size_x 
+        self.cell_size_y = cell_size_y 
+        self._win = win 
+        self._cells = []
+        self._create_cells()
+        self._draw_cells()
+
+
+    def _create_cells(self):
+        for col_num in range(self.num_cols):
+            self._cells.append([])
+            col = self._cells[col_num]
+            for row_num in range(self.num_rows):
+                tx = self.x1 + col_num * self.cell_size_x
+                ty = self.y1 + row_num * self.cell_size_y
+                bx = tx + self.cell_size_x
+                by = ty + self.cell_size_y
+                col.append(Cell(self._win, Point(tx, ty), Point(bx, by)))
+        
+    def _draw_cells(self):
+        for col in self._cells:
+            for cell in col:
+                cell.draw()
